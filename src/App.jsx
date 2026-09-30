@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { evaluate, num } from "mathjs";
+import { evaluate } from "mathjs";
 import "./App.css";
 
 export function Button({ value, onButtonClick }) {
@@ -14,13 +14,14 @@ export function ButtonPanel({
   onOperator,
   onBackspace,
   onBrackets,
+  onPlusMinus,
 }) {
   return (
     <div>
       <div>
         <Button value="C" onButtonClick={onClear} />
         <Button value="()" onButtonClick={onBrackets} />
-        <Button value="%" onButtonClick={onNewEntry} />
+        <Button value="+/-" onButtonClick={onPlusMinus} />
         <Button value="/" onButtonClick={onOperator} />
       </div>
       <div>
@@ -55,84 +56,84 @@ function CurrentInput({ input }) {
   return <h1>{input}</h1>;
 }
 
-function Results({ input }) {
-  let result = "";
-
-  try {
-    result = evaluate(input.replaceAll("x", "*"));
-  } catch {
-    result = "";
-  }
-
+function Results({ result }) {
   return <h2>{result}</h2>;
 }
 
-function Display({ input }) {
+function Display({ input, result }) {
   return (
     <div>
       <CurrentInput input={input} />
-      <Results input={input} />
+      <Results result={result} />
     </div>
   );
 }
 
 function Calculator() {
   const [input, setInput] = useState("");
-  const [dotIsBlocked, setDotIsBlocked] = useState(true);
-  const [operatorIsBlocked, setOperatorIsBlocked] = useState(true);
-  const [isDot, setIsDot] = useState(false);
+
+  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const operatros = ["+", "-", "/", "x"];
+  const lastCharacter = input.at(-1);
+  const operatorIsBlocked = input === "" || operatros.includes(lastCharacter);
   const openBrackets = input.split("(").length - 1;
   const closeBrackets = input.split(")").length - 1;
+  const missingBrackets = openBrackets - closeBrackets;
+  let currentNumber = input;
+  for (const operator of ["+", "-", "x", "/", "(", ")"]) {
+    currentNumber = currentNumber.split(operator).at(-1);
+  }
+  const dotIsBlocked = currentNumber.includes(".");
+  const beforeCurrentNumber = input.slice(
+    0,
+    input.length - currentNumber.length,
+  );
 
-  const lastCharacter = input.charAt(input.length - 1);
-  const numbers = "0 1 2 3 4 5 6 7 8 9";
-  const operatros = "+ - / x";
-  console.log("dotIsBlocked is:", dotIsBlocked);
-  console.log("isDot is:", isDot);
+  let result = "";
+
+  try {
+    result = evaluate(input.replaceAll("x", "*") + ")".repeat(missingBrackets));
+  } catch {
+    result = "";
+  }
+
+  console.log("Dot is blocked:" + dotIsBlocked);
+  console.log("Operator is blocked:" + operatorIsBlocked);
+  console.log("Open brackets:" + openBrackets);
+  console.log("Close brackets:" + closeBrackets);
+  console.log("The current number is:" + currentNumber);
+  console.log("The previous number is:" + beforeCurrentNumber);
+  console.log("The last character is:" + lastCharacter);
+
   function handleNewEntry(i) {
     setInput(input + i);
-    setOperatorIsBlocked(false);
-    if (!isDot) {
-      setDotIsBlocked(false);
-    }
   }
   function handleDot(i) {
-    if (!dotIsBlocked && !isDot) {
-      if (operatros.includes(input.at(-1))) {
+    if (!dotIsBlocked) {
+      if (operatros.includes(input.at(-1)) || input === "") {
         setInput(input + "0" + i);
       } else {
         setInput(input + i);
       }
-      setDotIsBlocked(true);
-      setIsDot(true);
     }
   }
   function handleOperator(i) {
     if (!operatorIsBlocked) {
-      setInput(input + i);
-      setOperatorIsBlocked(true);
-      //setIsOperator(true);
-      setIsDot(false);
-      setDotIsBlocked(false);
+      if ((i === "x" || i === "/") && lastCharacter === "(") {
+        return;
+      } else {
+        setInput(input + i);
+      }
     }
   }
+
   function handleBackspace() {
-    if (lastCharacter === ".") {
-      setInput(input.slice(0, -1));
-      setDotIsBlocked(false);
-      setIsDot(false);
-    } else if (operatros.includes(lastCharacter)) {
-      setInput(input.slice(0, -1));
-      setOperatorIsBlocked(false);
-      //setIsOperator(false);
-    } else {
-      setInput(input.slice(0, -1));
-    }
+    setInput(input.slice(0, -1));
   }
   function handleBrackets() {
     if (
       (openBrackets > closeBrackets && numbers.includes(lastCharacter)) ||
-      (openBrackets !== closeBrackets && lastCharacter === ")")
+      (openBrackets > closeBrackets && lastCharacter === ")")
     ) {
       setInput(input + ")");
     } else {
@@ -142,12 +143,19 @@ function Calculator() {
   function handleClear() {
     setInput("");
   }
+  function handlePlusMinus() {
+    if (beforeCurrentNumber.endsWith("(-")) {
+      setInput(beforeCurrentNumber.slice(0, -2) + currentNumber);
+    } else {
+      setInput(beforeCurrentNumber + "(-" + currentNumber);
+    }
+  }
   function handleEqual() {
-    setInput(input);
+    setInput(String(result));
   }
   return (
     <div>
-      <Display input={input} />
+      <Display input={input} result={result} />
       <ButtonPanel
         onNewEntry={handleNewEntry}
         onClear={handleClear}
@@ -156,6 +164,7 @@ function Calculator() {
         onOperator={handleOperator}
         onBackspace={handleBackspace}
         onBrackets={handleBrackets}
+        onPlusMinus={handlePlusMinus}
       />
     </div>
   );
