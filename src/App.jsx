@@ -1,73 +1,8 @@
 import { useState } from "react";
 import { evaluate } from "mathjs";
+import ButtonPanel from "./components/ButtonPanel";
+import Display from "./components/Display";
 import "./App.css";
-
-export function Button({ value, onButtonClick }) {
-  return <button onClick={() => onButtonClick(value)}>{value}</button>;
-}
-
-export function ButtonPanel({
-  onClear,
-  onNewEntry,
-  onEqual,
-  onDot,
-  onOperator,
-  onBackspace,
-  onBrackets,
-  onPlusMinus,
-}) {
-  return (
-    <div>
-      <div>
-        <Button value="C" onButtonClick={onClear} />
-        <Button value="()" onButtonClick={onBrackets} />
-        <Button value="+/-" onButtonClick={onPlusMinus} />
-        <Button value="/" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="7" onButtonClick={onNewEntry} />
-        <Button value="8" onButtonClick={onNewEntry} />
-        <Button value="9" onButtonClick={onNewEntry} />
-        <Button value="x" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="4" onButtonClick={onNewEntry} />
-        <Button value="5" onButtonClick={onNewEntry} />
-        <Button value="6" onButtonClick={onNewEntry} />
-        <Button value="-" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="1" onButtonClick={onNewEntry} />
-        <Button value="2" onButtonClick={onNewEntry} />
-        <Button value="3" onButtonClick={onNewEntry} />
-        <Button value="+" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="⌫" onButtonClick={onBackspace} />
-        <Button value="0" onButtonClick={onNewEntry} />
-        <Button value="." onButtonClick={onDot} />
-        <Button value="=" onButtonClick={onEqual} />
-      </div>
-    </div>
-  );
-}
-
-function CurrentInput({ input }) {
-  return <h1>{input}</h1>;
-}
-
-function Results({ result }) {
-  return <h2>{result}</h2>;
-}
-
-function Display({ input, result }) {
-  return (
-    <div>
-      <CurrentInput input={input} />
-      <Results result={result} />
-    </div>
-  );
-}
 
 function Calculator() {
   const [input, setInput] = useState("");
