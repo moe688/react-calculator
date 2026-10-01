@@ -1,4 +1,5 @@
-import Button from "./Button";
+import CalculatorButton from "./CalculatorButton";
+import { Delete, Diff } from "lucide-react";
 
 export default function ButtonPanel({
   onClear,
@@ -13,34 +14,38 @@ export default function ButtonPanel({
   return (
     <div>
       <div>
-        <Button value="C" onButtonClick={onClear} />
-        <Button value="()" onButtonClick={onBrackets} />
-        <Button value="+/-" onButtonClick={onPlusMinus} />
-        <Button value="/" onButtonClick={onOperator} />
+        <CalculatorButton value="C" onButtonClick={onClear} />
+        <CalculatorButton value="()" onButtonClick={onBrackets} />
+        <CalculatorButton value="+/-" onButtonClick={onPlusMinus}>
+          <Diff />
+        </CalculatorButton>
+        <CalculatorButton value="/" onButtonClick={onOperator} />
       </div>
       <div>
-        <Button value="7" onButtonClick={onNewEntry} />
-        <Button value="8" onButtonClick={onNewEntry} />
-        <Button value="9" onButtonClick={onNewEntry} />
-        <Button value="x" onButtonClick={onOperator} />
+        <CalculatorButton value="7" onButtonClick={onNewEntry} />
+        <CalculatorButton value="8" onButtonClick={onNewEntry} />
+        <CalculatorButton value="9" onButtonClick={onNewEntry} />
+        <CalculatorButton value="x" onButtonClick={onOperator} />
       </div>
       <div>
-        <Button value="4" onButtonClick={onNewEntry} />
-        <Button value="5" onButtonClick={onNewEntry} />
-        <Button value="6" onButtonClick={onNewEntry} />
-        <Button value="-" onButtonClick={onOperator} />
+        <CalculatorButton value="4" onButtonClick={onNewEntry} />
+        <CalculatorButton value="5" onButtonClick={onNewEntry} />
+        <CalculatorButton value="6" onButtonClick={onNewEntry} />
+        <CalculatorButton value="-" onButtonClick={onOperator} />
       </div>
       <div>
-        <Button value="1" onButtonClick={onNewEntry} />
-        <Button value="2" onButtonClick={onNewEntry} />
-        <Button value="3" onButtonClick={onNewEntry} />
-        <Button value="+" onButtonClick={onOperator} />
+        <CalculatorButton value="1" onButtonClick={onNewEntry} />
+        <CalculatorButton value="2" onButtonClick={onNewEntry} />
+        <CalculatorButton value="3" onButtonClick={onNewEntry} />
+        <CalculatorButton value="+" onButtonClick={onOperator} />
       </div>
       <div>
-        <Button value="⌫" onButtonClick={onBackspace} />
-        <Button value="0" onButtonClick={onNewEntry} />
-        <Button value="." onButtonClick={onDot} />
-        <Button value="=" onButtonClick={onEqual} />
+        <CalculatorButton value="Backspace" onButtonClick={onBackspace}>
+          <Delete />
+        </CalculatorButton>
+        <CalculatorButton value="0" onButtonClick={onNewEntry} />
+        <CalculatorButton value="." onButtonClick={onDot} />
+        <CalculatorButton value="=" onButtonClick={onEqual} />
       </div>
     </div>
   );
