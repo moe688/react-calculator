@@ -114,7 +114,7 @@ export default function Calculator() {
   console.log("The last character is:" + lastCharacter);
 
   return (
-    <div className="w-130 border-2 border-green-700 flex flex-col gap-10">
+    <div className="w-130 border-2 border-green-700 flex flex-col gap-10 p-5 bg-blue-500">
       <div className="">
         <Display input={input} result={displayText} />
       </div>
