@@ -95,6 +95,25 @@ function Calculator() {
       updateInput(String(result));
     }
   }
+
+  console.log(
+    "result:",
+    result,
+    "| resultToShow:",
+    resultToShow,
+    "| displayText:",
+    displayText,
+  );
+  console.log("errorMessage:", errorMessage);
+
+  console.log("Dot is blocked:" + dotIsBlocked);
+  console.log("Operator is blocked:" + operatorIsBlocked);
+  console.log("Open brackets:" + openBrackets);
+  console.log("Close brackets:" + closeBrackets);
+  console.log("The current number is:" + currentNumber);
+  console.log("The previous number is:" + beforeCurrentNumber);
+  console.log("The last character is:" + lastCharacter);
+
   return (
     <div>
       <Display input={input} result={displayText} />
@@ -115,21 +134,3 @@ function Calculator() {
 export default function App() {
   return <Calculator />;
 }
-
-// console.log(
-//   "result:",
-//   result,
-//   "| resultToShow:",
-//   resultToShow,
-//   "| displayText:",
-//   displayText,
-// );
-// console.log("errorMessage:", errorMessage);
-
-// console.log("Dot is blocked:" + dotIsBlocked);
-// console.log("Operator is blocked:" + operatorIsBlocked);
-// console.log("Open brackets:" + openBrackets);
-// console.log("Close brackets:" + closeBrackets);
-// console.log("The current number is:" + currentNumber);
-// console.log("The previous number is:" + beforeCurrentNumber);
-// console.log("The last character is:" + lastCharacter);
