@@ -31,7 +31,8 @@ function Calculator() {
 
   try {
     result = evaluate(input.replaceAll("x", "*") + ")".repeat(missingBrackets));
-  } catch {
+  } catch (evaluationError) {
+    console.error(evaluationError);
     result = "";
   }
   const resultToShow = Number.isFinite(result) ? result : "";
