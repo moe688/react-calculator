@@ -1,6 +1,6 @@
 function CurrentInput({ input }) {
   return (
-    <h1 className="flex justify-end-safe items-center min-h-25  min-w-full max-w-sm text-5xl [scrollbar-thin] overflow-x-auto border-2 border-red-500 ">
+    <h1 className="rounded-lg border bg-muted flex justify-end-safe items-center min-h-25  min-w-full max-w-sm text-5xl [scrollbar-thin] overflow-x-auto ">
       {input}
     </h1>
   );
@@ -8,15 +8,15 @@ function CurrentInput({ input }) {
 
 function Results({ result }) {
   return (
-    <h2 className=" flex justify-end-safe items-center min-h-15  min-w-full max-w-sm [scrollbar-thin] text-2xl text-gray-500 overflow-x-auto border-2 border-red-500">
+    <output className="rounded-lg border bg-muted flex justify-end-safe items-center min-h-15  min-w-full max-w-sm [scrollbar-thin] text-2xl text-gray-500 overflow-x-auto ">
       {result}
-    </h2>
+    </output>
   );
 }
 
 export default function Display({ input, result }) {
   return (
-    <div className="grid gap-2">
+    <div className="rounded-lg border bg-muted p-4 grid gap-2">
       <CurrentInput input={input} />
       <Results result={result} />
     </div>

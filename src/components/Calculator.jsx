@@ -2,6 +2,7 @@ import { useState } from "react";
 import { evaluate } from "mathjs";
 import ButtonPanel from "@/components/ButtonPanel";
 import Display from "@/components/Display";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function Calculator() {
   const [input, setInput] = useState("");
@@ -114,11 +115,11 @@ export default function Calculator() {
   console.log("The last character is:" + lastCharacter);
 
   return (
-    <div className="w-130 border-2 border-green-700 flex flex-col gap-10 p-5 bg-blue-500">
-      <div className="">
+    <Card className="w-100 flex flex-col gap-5 pt-10 bg-gray-300">
+      <CardHeader>
         <Display input={input} result={displayText} />
-      </div>
-      <div>
+      </CardHeader>
+      <CardContent>
         <ButtonPanel
           onNewEntry={handleNewEntry}
           onClear={handleClear}
@@ -129,7 +130,7 @@ export default function Calculator() {
           onBrackets={handleBrackets}
           onPlusMinus={handlePlusMinus}
         />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
