@@ -6,6 +6,7 @@ import "./App.css";
 
 const NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const OPERATORS = ["+", "-", "/", "x"];
+const SEPARATORS = [...OPERATORS, "(", ")"];
 
 function Calculator() {
   const [input, setInput] = useState("");
@@ -17,8 +18,8 @@ function Calculator() {
   const missingBrackets = openBrackets - closeBrackets;
 
   let currentNumber = input;
-  for (const operator of ["+", "-", "x", "/", "(", ")"]) {
-    currentNumber = currentNumber.split(operator).at(-1);
+  for (const separator of SEPARATORS) {
+    currentNumber = currentNumber.split(separator).at(-1);
   }
   const dotIsBlocked = currentNumber.includes(".");
 
