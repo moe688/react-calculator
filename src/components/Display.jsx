@@ -1,6 +1,6 @@
 function CurrentInput({ input }) {
   return (
-    <h1 className="rounded-lg border bg-muted flex justify-end-safe items-center min-h-25  min-w-full max-w-sm text-5xl [scrollbar-thin] overflow-x-auto ">
+    <h1 className="rounded-lg border bg-muted flex justify-end-safe items-center h-25  min-w-full max-w-sm text-5xl [scrollbar-thin] overflow-x-auto whitespace-nowrap">
       {input}
     </h1>
   );
