@@ -4,14 +4,14 @@ import ButtonPanel from "./components/ButtonPanel";
 import Display from "./components/Display";
 import "./App.css";
 
+const NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const OPERATORS = ["+", "-", "/", "x"];
+
 function Calculator() {
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  const operatros = ["+", "-", "/", "x"];
   const lastCharacter = input.at(-1);
-  const operatorIsBlocked = input === "" || operatros.includes(lastCharacter);
+  const operatorIsBlocked = input === "" || OPERATORS.includes(lastCharacter);
   const openBrackets = input.split("(").length - 1;
   const closeBrackets = input.split(")").length - 1;
   const missingBrackets = openBrackets - closeBrackets;
@@ -46,7 +46,7 @@ function Calculator() {
   }
   function handleDot(i) {
     if (!dotIsBlocked) {
-      if (operatros.includes(input.at(-1)) || input === "") {
+      if (OPERATORS.includes(input.at(-1)) || input === "") {
         updateInput(input + "0" + i);
       } else {
         updateInput(input + i);
@@ -68,7 +68,7 @@ function Calculator() {
   }
   function handleBrackets() {
     if (
-      (openBrackets > closeBrackets && numbers.includes(lastCharacter)) ||
+      (openBrackets > closeBrackets && NUMBERS.includes(lastCharacter)) ||
       (openBrackets > closeBrackets && lastCharacter === ")")
     ) {
       updateInput(input + ")");
