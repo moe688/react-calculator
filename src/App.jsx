@@ -43,24 +43,24 @@ function Calculator() {
     setErrorMessage("");
   }
 
-  function handleNewEntry(i) {
-    updateInput(input + i);
+  function handleNewEntry(digit) {
+    updateInput(input + digit);
   }
-  function handleDot(i) {
+  function handleDot(dot) {
     if (!dotIsBlocked) {
       if (OPERATORS.includes(input.at(-1)) || input === "") {
-        updateInput(input + "0" + i);
+        updateInput(input + "0" + dot);
       } else {
-        updateInput(input + i);
+        updateInput(input + dot);
       }
     }
   }
-  function handleOperator(i) {
+  function handleOperator(operator) {
     if (!operatorIsBlocked) {
-      if ((i === "x" || i === "/") && lastCharacter === "(") {
+      if ((operator === "x" || operator === "/") && lastCharacter === "(") {
         return;
       } else {
-        updateInput(input + i);
+        updateInput(input + operator);
       }
     }
   }
