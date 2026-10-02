@@ -55,15 +55,12 @@ function Calculator() {
       }
     }
   }
-  function handleOperator(operator) {
-    if (!operatorIsBlocked) {
-      if ((operator === "x" || operator === "/") && lastCharacter === "(") {
-        return;
-      } else {
-        updateInput(input + operator);
-      }
-    }
-  }
+
+  const handleOperator = (operator) => {
+    if (operatorIsBlocked) return;
+    if ((operator === "x" || operator === "/") && lastCharacter === "(") return;
+    updateInput(input + operator);
+  };
 
   function handleBackspace() {
     updateInput(input.slice(0, -1));
