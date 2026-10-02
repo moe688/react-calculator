@@ -95,23 +95,19 @@ function Calculator() {
     }
   }
 
-  console.log(
-    "result:",
+  console.log({
+    errorMessage,
     result,
-    "| resultToShow:",
     resultToShow,
-    "| displayText:",
     displayText,
-  );
-  console.log("errorMessage:", errorMessage);
-
-  console.log("Dot is blocked:" + dotIsBlocked);
-  console.log("Operator is blocked:" + operatorIsBlocked);
-  console.log("Open brackets:" + openBrackets);
-  console.log("Close brackets:" + closeBrackets);
-  console.log("The current number is:" + currentNumber);
-  console.log("The previous number is:" + beforeCurrentNumber);
-  console.log("The last character is:" + lastCharacter);
+    dotIsBlocked,
+    operatorIsBlocked,
+    openBrackets,
+    closeBrackets,
+    currentNumber,
+    beforeCurrentNumber,
+    lastCharacter,
+  });
 
   return (
     <div>
