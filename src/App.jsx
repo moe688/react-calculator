@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { evaluate } from "mathjs";
-import ButtonPanel from "./components/ButtonPanel";
+import { ButtonPanel } from "./components/ButtonPanel";
 import Display from "./components/Display";
 import "./App.css";
 

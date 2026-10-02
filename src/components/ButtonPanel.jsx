@@ -1,6 +1,14 @@
 import Button from "./Button";
 
-export default function ButtonPanel({
+const BUTTONS = [
+  ["C", "()", "+/-", "/"],
+  ["7", "8", "9", "x"],
+  ["4", "5", "6", "-"],
+  ["1", "2", "3", "+"],
+  ["⌫", "0", ".", "="],
+];
+
+export const ButtonPanel = ({
   onClear,
   onNewEntry,
   onEqual,
@@ -9,39 +17,44 @@ export default function ButtonPanel({
   onBackspace,
   onBrackets,
   onPlusMinus,
-}) {
+}) => {
+  const getSuitableFunction = (buttonContent) => {
+    switch (buttonContent) {
+      case "C":
+        return onClear;
+      case "()":
+        return onBrackets;
+      case "+/-":
+        return onPlusMinus;
+      case "⌫":
+        return onBackspace;
+      case ".":
+        return onDot;
+      case "=":
+        return onEqual;
+      case "/":
+      case "x":
+      case "-":
+      case "+":
+        return onOperator;
+      default:
+        return onNewEntry;
+    }
+  };
   return (
     <div>
-      <div>
-        <Button value="C" onButtonClick={onClear} />
-        <Button value="()" onButtonClick={onBrackets} />
-        <Button value="+/-" onButtonClick={onPlusMinus} />
-        <Button value="/" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="7" onButtonClick={onNewEntry} />
-        <Button value="8" onButtonClick={onNewEntry} />
-        <Button value="9" onButtonClick={onNewEntry} />
-        <Button value="x" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="4" onButtonClick={onNewEntry} />
-        <Button value="5" onButtonClick={onNewEntry} />
-        <Button value="6" onButtonClick={onNewEntry} />
-        <Button value="-" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="1" onButtonClick={onNewEntry} />
-        <Button value="2" onButtonClick={onNewEntry} />
-        <Button value="3" onButtonClick={onNewEntry} />
-        <Button value="+" onButtonClick={onOperator} />
-      </div>
-      <div>
-        <Button value="⌫" onButtonClick={onBackspace} />
-        <Button value="0" onButtonClick={onNewEntry} />
-        <Button value="." onButtonClick={onDot} />
-        <Button value="=" onButtonClick={onEqual} />
-      </div>
+      {BUTTONS.map((row) => {
+        return (
+          <div>
+            {row.map((buttonContent) => {
+              const buttonFunction = getSuitableFunction(buttonContent);
+              return (
+                <Button value={buttonContent} onButtonClick={buttonFunction} />
+              );
+            })}
+          </div>
+        );
+      })}
     </div>
   );
-}
+};
