@@ -1,24 +1,25 @@
 import { useState } from "react";
 import { evaluate } from "mathjs";
-import ButtonPanel from "@/components/ButtonPanel";
+import { ButtonPanel } from "@/components/ButtonPanel";
 import Display from "@/components/Display";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+
+const NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const OPERATORS = ["+", "-", "/", "x"];
+const SEPARATORS = [...OPERATORS, "(", ")"];
 
 export default function Calculator() {
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  const operatros = ["+", "-", "/", "x"];
   const lastCharacter = input.at(-1);
-  const operatorIsBlocked = input === "" || operatros.includes(lastCharacter);
+  const operatorIsBlocked = input === "" || OPERATORS.includes(lastCharacter);
   const openBrackets = input.split("(").length - 1;
   const closeBrackets = input.split(")").length - 1;
   const missingBrackets = openBrackets - closeBrackets;
 
   let currentNumber = input;
-  for (const operator of ["+", "-", "x", "/", "(", ")"]) {
-    currentNumber = currentNumber.split(operator).at(-1);
+  for (const separator of SEPARATORS) {
+    currentNumber = currentNumber.split(separator).at(-1);
   }
   const dotIsBlocked = currentNumber.includes(".");
 
@@ -30,7 +31,8 @@ export default function Calculator() {
 
   try {
     result = evaluate(input.replaceAll("x", "*") + ")".repeat(missingBrackets));
-  } catch {
+  } catch (evaluationError) {
+    console.error(evaluationError);
     result = "";
   }
   const resultToShow = Number.isFinite(result) ? result : "";
@@ -41,34 +43,30 @@ export default function Calculator() {
     setErrorMessage("");
   }
 
-  function handleNewEntry(i) {
-    updateInput(input + i);
+  function handleNewEntry(digit) {
+    updateInput(input + digit);
   }
-  function handleDot(i) {
-    if (!dotIsBlocked) {
-      if (operatros.includes(input.at(-1)) || input === "") {
-        updateInput(input + "0" + i);
-      } else {
-        updateInput(input + i);
-      }
+  function handleDot(dot) {
+    if (dotIsBlocked) return;
+    if (OPERATORS.includes(input.at(-1)) || input === "") {
+      updateInput(input + "0" + dot);
+      return;
     }
+    updateInput(input + dot);
   }
-  function handleOperator(i) {
-    if (!operatorIsBlocked) {
-      if ((i === "x" || i === "/") && lastCharacter === "(") {
-        return;
-      } else {
-        updateInput(input + i);
-      }
-    }
-  }
+
+  const handleOperator = (operator) => {
+    if (operatorIsBlocked) return;
+    if ((operator === "x" || operator === "/") && lastCharacter === "(") return;
+    updateInput(input + operator);
+  };
 
   function handleBackspace() {
     updateInput(input.slice(0, -1));
   }
   function handleBrackets() {
     if (
-      (openBrackets > closeBrackets && numbers.includes(lastCharacter)) ||
+      (openBrackets > closeBrackets && NUMBERS.includes(lastCharacter)) ||
       (openBrackets > closeBrackets && lastCharacter === ")")
     ) {
       updateInput(input + ")");
@@ -95,25 +93,6 @@ export default function Calculator() {
       updateInput(String(result));
     }
   }
-
-  console.log(
-    "result:",
-    result,
-    "| resultToShow:",
-    resultToShow,
-    "| displayText:",
-    displayText,
-  );
-  console.log("errorMessage:", errorMessage);
-
-  console.log("Dot is blocked:" + dotIsBlocked);
-  console.log("Operator is blocked:" + operatorIsBlocked);
-  console.log("Open brackets:" + openBrackets);
-  console.log("Close brackets:" + closeBrackets);
-  console.log("The current number is:" + currentNumber);
-  console.log("The previous number is:" + beforeCurrentNumber);
-  console.log("The last character is:" + lastCharacter);
-
   return (
     <Card className="w-100 flex flex-col gap-5 pt-10 bg-gray-300">
       <CardHeader>
