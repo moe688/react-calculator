@@ -8,7 +8,7 @@ const NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const OPERATORS = ["+", "-", "/", "x"];
 const SEPARATORS = [...OPERATORS, "(", ")"];
 
-export default function Calculator() {
+const Calculator = () => {
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const lastCharacter = input.at(-1);
@@ -38,22 +38,23 @@ export default function Calculator() {
   const resultToShow = Number.isFinite(result) ? result : "";
   const displayText = errorMessage !== "" ? errorMessage : resultToShow;
 
-  function updateInput(newInput) {
+  const updateInput = (newInput) => {
     setInput(newInput);
     setErrorMessage("");
-  }
+  };
 
-  function handleNewEntry(digit) {
+  const handleNewEntry = (digit) => {
     updateInput(input + digit);
-  }
-  function handleDot(dot) {
+  };
+
+  const handleDot = (dot) => {
     if (dotIsBlocked) return;
     if (OPERATORS.includes(input.at(-1)) || input === "") {
       updateInput(input + "0" + dot);
       return;
     }
     updateInput(input + dot);
-  }
+  };
 
   const handleOperator = (operator) => {
     if (operatorIsBlocked) return;
@@ -61,10 +62,11 @@ export default function Calculator() {
     updateInput(input + operator);
   };
 
-  function handleBackspace() {
+  const handleBackspace = () => {
     updateInput(input.slice(0, -1));
-  }
-  function handleBrackets() {
+  };
+
+  const handleBrackets = () => {
     if (
       (openBrackets > closeBrackets && NUMBERS.includes(lastCharacter)) ||
       (openBrackets > closeBrackets && lastCharacter === ")")
@@ -73,18 +75,19 @@ export default function Calculator() {
     } else {
       updateInput(input + "(");
     }
-  }
-  function handleClear() {
+  };
+  const handleClear = () => {
     updateInput("");
-  }
-  function handlePlusMinus() {
+  };
+
+  const handlePlusMinus = () => {
     if (beforeCurrentNumber.endsWith("(-")) {
       updateInput(beforeCurrentNumber.slice(0, -2) + currentNumber);
     } else {
       updateInput(beforeCurrentNumber + "(-" + currentNumber);
     }
-  }
-  function handleEqual() {
+  };
+  const handleEqual = () => {
     if (result === "") {
       setErrorMessage("Invalid format used");
     } else if (!Number.isFinite(result)) {
@@ -92,7 +95,7 @@ export default function Calculator() {
     } else {
       updateInput(String(result));
     }
-  }
+  };
   return (
     <Card className="w-100 flex flex-col gap-5 pt-10 bg-gray-300">
       <CardHeader>
@@ -112,4 +115,6 @@ export default function Calculator() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default Calculator;
