@@ -43,10 +43,10 @@ export const ButtonPanel = ({
   };
   return (
     <div>
-      {BUTTONS.map((row) => {
+      {BUTTONS.map((buttonRow) => {
         return (
           <div>
-            {row.map((buttonContent) => {
+            {buttonRow.map((buttonContent) => {
               const buttonFunction = getSuitableFunction(buttonContent);
               return (
                 <Button value={buttonContent} onButtonClick={buttonFunction} />
