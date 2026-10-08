@@ -50,7 +50,7 @@ const Calculator = () => {
 	const handleDot = (dot) => {
 		if (dotIsBlocked) return;
 		if (OPERATORS.includes(input.at(-1)) || input === "") {
-			updateInput(input + "0" + dot);
+			updateInput(`${input}0.`);
 			return;
 		}
 		updateInput(input + dot);
@@ -71,9 +71,9 @@ const Calculator = () => {
 			(openBrackets > closeBrackets && NUMBERS.includes(lastCharacter)) ||
 			(openBrackets > closeBrackets && lastCharacter === ")")
 		) {
-			updateInput(input + ")");
+			updateInput(`${input})`);
 		} else {
-			updateInput(input + "(");
+			updateInput(`${input}(`);
 		}
 	};
 	const handleClear = () => {
@@ -84,7 +84,7 @@ const Calculator = () => {
 		if (beforeCurrentNumber.endsWith("(-")) {
 			updateInput(beforeCurrentNumber.slice(0, -2) + currentNumber);
 		} else {
-			updateInput(beforeCurrentNumber + "(-" + currentNumber);
+			updateInput(`${beforeCurrentNumber}(-${currentNumber}`);
 		}
 	};
 	const handleEqual = () => {
