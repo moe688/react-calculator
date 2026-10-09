@@ -2,8 +2,8 @@ import { Separator } from "@/components/ui/separator";
 
 const Display = ({ input, result }) => {
 	return (
-		<div className="rounded-lg border bg-muted p-4 grid gap-2">
-			<h1 className="rounded-lg border bg-muted flex flex-row-reverse items-center h-25  min-w-full max-w-sm text-5xl [scrollbar-thin] overflow-x-auto whitespace-nowrap">
+		<div className="rounded-lg border bg-muted p-4 grid gap-2 ">
+			<h1 className="rounded-lg border bg-muted flex justify-end-safe items-center h-25  min-w-full max-w-sm text-5xl [scrollbar-thin] overflow-x-auto whitespace-nowrap">
 				{input}
 			</h1>
 			<Separator />

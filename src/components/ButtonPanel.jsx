@@ -1,4 +1,4 @@
-import CalculatorButton from "./CalculatorButton";
+import { Button } from "@/components/ui/button";
 import { Delete, Diff } from "lucide-react";
 
 const BUTTONS = [
@@ -75,14 +75,15 @@ export const ButtonPanel = ({
 					const buttonIcon = getSuitableIcon(buttonContent);
 					const buttonVariant = getSuitableVariant(buttonContent);
 					return (
-						<CalculatorButton
+						<Button
+							className="h-16 w-full text-2xl"
 							key={buttonContent}
 							value={buttonContent}
-							onButtonClick={buttonFunction}
+							onClick={() => buttonFunction(buttonContent)}
 							variant={buttonVariant}
 						>
-							{buttonIcon}
-						</CalculatorButton>
+							{buttonIcon ?? buttonContent}
+						</Button>
 					);
 				});
 			})}
