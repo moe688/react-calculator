@@ -1,6 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Delete, Diff } from "lucide-react";
 
+interface ButtonPanelProps {
+	onClear: () => void;
+	onNewEntry: (digit: string) => void;
+	onEqual: () => void;
+	onDot: (dot: string) => void;
+	onOperator: (operator: string) => void;
+	onBackspace: () => void;
+	onBrackets: () => void;
+	onPlusMinus: () => void;
+}
+
 const BUTTONS = [
 	["C", "()", "+/-", "/"],
 	["7", "8", "9", "x"],
@@ -18,8 +29,8 @@ export const ButtonPanel = ({
 	onBackspace,
 	onBrackets,
 	onPlusMinus,
-}) => {
-	const getSuitableFunction = (buttonContent) => {
+}: ButtonPanelProps) => {
+	const getSuitableFunction = (buttonContent: string) => {
 		switch (buttonContent) {
 			case "C":
 				return onClear;
@@ -42,7 +53,7 @@ export const ButtonPanel = ({
 				return onNewEntry;
 		}
 	};
-	const getSuitableIcon = (buttonContent) => {
+	const getSuitableIcon = (buttonContent: string) => {
 		switch (buttonContent) {
 			case "⌫":
 				return <Delete />;
@@ -52,7 +63,7 @@ export const ButtonPanel = ({
 				return null;
 		}
 	};
-	const getSuitableVariant = (buttonContent) => {
+	const getSuitableVariant = (buttonContent: string) => {
 		switch (buttonContent) {
 			case "C":
 			case "+":
