@@ -10,7 +10,7 @@ const SEPARATORS = [...OPERATORS, "(", ")"];
 const Calculator = () => {
 	const [input, setInput] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
-	const lastCharacter = input.at(-1);
+	const lastCharacter = input.at(-1) ?? "";
 	const lastCharachterIsNumber = NUMBERS.includes(lastCharacter);
 	const operatorIsBlocked = input === "" || OPERATORS.includes(lastCharacter);
 	const openBrackets = input.split("(").length - 1;
@@ -19,14 +19,14 @@ const Calculator = () => {
 	const bracketsAreOpen = openBrackets > closeBrackets;
 	let currentNumber = input;
 	for (const separator of SEPARATORS) {
-		currentNumber = currentNumber.split(separator).at(-1);
+		currentNumber = currentNumber.split(separator).at(-1) ?? "";
 	}
 	const dotIsBlocked = currentNumber.includes(".");
 	const beforeCurrentNumber = input.slice(
 		0,
 		input.length - currentNumber.length,
 	);
-	let result = "";
+	let result: string | number = "";
 	try {
 		result = evaluate(input.replaceAll("x", "*") + ")".repeat(missingBrackets));
 	} catch (evaluationError) {
@@ -35,22 +35,22 @@ const Calculator = () => {
 	}
 	const resultToShow = Number.isFinite(result) ? result : "";
 	const displayText = errorMessage !== "" ? errorMessage : resultToShow;
-	const updateInput = (newInput) => {
+	const updateInput = (newInput: string) => {
 		setInput(newInput);
 		setErrorMessage("");
 	};
-	const handleNewEntry = (digit) => {
+	const handleNewEntry = (digit: string) => {
 		updateInput(input + digit);
 	};
-	const handleDot = (dot) => {
+	const handleDot = (dot: string) => {
 		if (dotIsBlocked) return;
-		if (OPERATORS.includes(input.at(-1)) || input === "") {
+		if (OPERATORS.includes(lastCharacter) || input === "") {
 			updateInput(`${input}0.`);
 			return;
 		}
 		updateInput(input + dot);
 	};
-	const handleOperator = (operator) => {
+	const handleOperator = (operator: string) => {
 		if (operatorIsBlocked) return;
 		if ((operator === "x" || operator === "/") && lastCharacter === "(") return;
 		updateInput(input + operator);
